@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build_runner",
+			"type": "dart",
+			"command": "dart",
+			"args": [
+				"run",
+				"build_runner",
+				"build"
+			],
+		},
+		{
+			"label": "import_sorter",
+			"type": "dart",
+			"command": "dart",
+			"args": [
+				"run",
+				"import_sorter:main",
+				"--no-comments"
+			],
+		}
+	]
+}
