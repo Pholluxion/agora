@@ -4,9 +4,14 @@ import 'package:agora/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AgoraTimer extends StatefulWidget {
-  const AgoraTimer({super.key, this.minutes = 2});
+  const AgoraTimer({
+    super.key,
+    this.minutes = 2,
+    this.fontSize = 20,
+  });
 
   final int minutes;
+  final double fontSize;
 
   @override
   State<StatefulWidget> createState() => _AgoraTimerState();
@@ -43,11 +48,12 @@ class _AgoraTimerState extends State<AgoraTimer> {
                     fit: FlexFit.tight,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Flexible(
-                          flex: 3,
+                          flex: 1,
                           fit: FlexFit.tight,
-                          child: AgoraText(text: '${time.minute}'),
+                          child: AgoraText(text: '${time.minute}', fontSize: widget.fontSize),
                         ),
                         const Flexible(
                           flex: 1,
@@ -57,10 +63,10 @@ class _AgoraTimerState extends State<AgoraTimer> {
                       ],
                     ),
                   ),
-                  const Flexible(
+                  Flexible(
                     flex: 1,
                     fit: FlexFit.tight,
-                    child: AgoraText(text: ':'),
+                    child: AgoraText(text: ':', fontSize: widget.fontSize),
                   ),
                   Flexible(
                     flex: 2,
@@ -71,7 +77,7 @@ class _AgoraTimerState extends State<AgoraTimer> {
                         Flexible(
                           flex: 3,
                           fit: FlexFit.tight,
-                          child: AgoraText(text: '${time.second}'),
+                          child: AgoraText(text: '${time.second}', fontSize: widget.fontSize),
                         ),
                         const Flexible(
                           flex: 1,
@@ -86,7 +92,61 @@ class _AgoraTimerState extends State<AgoraTimer> {
             ),
           );
         }
-        return const SizedBox.shrink();
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: AgoraText(text: '02', fontSize: widget.fontSize),
+                      ),
+                      const Flexible(
+                        flex: 1,
+                        fit: FlexFit.tight,
+                        child: AgoraText(text: 'm', fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: AgoraText(text: ':', fontSize: widget.fontSize),
+                ),
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Flexible(
+                        flex: 3,
+                        fit: FlexFit.tight,
+                        child: AgoraText(text: '00', fontSize: widget.fontSize),
+                      ),
+                      const Flexible(
+                        flex: 1,
+                        fit: FlexFit.tight,
+                        child: AgoraText(text: 's', fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
     );
   }

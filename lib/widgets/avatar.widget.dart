@@ -16,10 +16,12 @@ class AgoraAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: radius,
-      backgroundColor: color ?? AppTheme.background,
-      child: image.image(),
+    return Card(
+      child: CircleAvatar(
+        radius: radius,
+        backgroundColor: color ?? AppTheme.backgroundColor,
+        child: image.image(),
+      ),
     );
   }
 }

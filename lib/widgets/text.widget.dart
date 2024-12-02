@@ -20,14 +20,27 @@ class AgoraText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(
-        color: AppTheme.text,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        fontFamily: fontFamily,
+    // return Text(
+    //   text,
+    //   textAlign: textAlign,
+    //   style: TextStyle(
+    //     color: AppTheme.textColor,
+    //     fontSize: fontSize,
+    //     fontWeight: fontWeight,
+    //     fontFamily: fontFamily,
+    //   ),
+    // );
+
+    return RichText(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          overflow: TextOverflow.clip,
+          color: AppTheme.textColor,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontFamily: fontFamily,
+        ),
       ),
     );
   }

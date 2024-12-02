@@ -1,10 +1,19 @@
+import 'package:agora/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:agora/core/core.dart';
 import 'package:agora/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
   runApp(const AgoraApp());
 }
 
@@ -19,30 +28,56 @@ class _AgoraAppState extends State<AgoraApp> {
   @override
   void initState() {
     super.initState();
-
-    SystemChrome.setPreferredOrientations(
-      [
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ],
-    );
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Agora',
-      theme: AppTheme.theme,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Agora Widget Book')),
-        body: const _WidgetBook(),
-        bottomSheet: const AgoraBottomSheet(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => UserCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AssemblyCubit(),
+        ),
+      ],
+      child: const MateApp(),
     );
   }
 }
 
+class MateApp extends StatefulWidget {
+  const MateApp({
+    super.key,
+  });
+
+  @override
+  State<MateApp> createState() => _MateAppState();
+}
+
+class _MateAppState extends State<MateApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Agora',
+      theme: AppTheme.theme,
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('es')],
+    );
+  }
+}
+
+// ignore: unused_element
 class _WidgetBook extends StatelessWidget {
   const _WidgetBook();
 
@@ -128,7 +163,7 @@ final textFormField = TextFormField(
 
 const gap = Gap.gap32;
 
-final textStyle = TextStyle(color: AppTheme.text);
+final textStyle = TextStyle(color: AppTheme.textColor);
 
 final elevatedButton = ElevatedButton(
   onPressed: () {},
